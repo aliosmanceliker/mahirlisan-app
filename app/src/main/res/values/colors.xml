@@ -2,6 +2,10 @@
 <resources>
     <!-- Mâhir Lisân Kurumsal Krem Arka Plan Rengi -->
     <color name="splash_background">#FFFDF7</color>
+    
+    <!-- Stres Yaratmasın, Her İki İsimlendirmeyi de Ekledik -->
+    <color name="colorPrimary">#1E3A8A</color>
+    <color name="colorPrimaryDark">#172554</color>
     <color name="primary">#1E3A8A</color>
     <color name="primaryDark">#172554</color>
     <color name="colorAccent">#1E3A8A</color>
