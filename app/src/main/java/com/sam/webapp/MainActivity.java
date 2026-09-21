@@ -1,4 +1,4 @@
-package com.sam.webapp;
+package com.mahirlisan.akademi;
 
 import android.Manifest;
 import android.app.DownloadManager;
@@ -101,28 +101,23 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_Email) {
             Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("plain/text");
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"Paste Your Mail ID Here"});
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
-            intent.putExtra(Intent.EXTRA_TEXT, "Mail Body");
-            startActivity(Intent.createChooser(intent, "Email Via"));
-        }
-        if (id == R.id.action_Contact) {
-            String phone = "Paste Your Contact Number Here";
-            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
-            startActivity(intent);
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"destek@mahirlisan.com"});
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Destek / İletişim");
+            intent.putExtra(Intent.EXTRA_TEXT, "Mesajınız...");
+            startActivity(Intent.createChooser(intent, "Email Gönder"));
         }
         if (id == R.id.refresh) {
             if (isOnline()){
                 webView.loadUrl(webView.getUrl());
-        } else {
+            } else {
                 Toast.makeText(this, "Can't Connect to Internet.", Toast.LENGTH_SHORT).show();
             }
         }
         if (id == R.id.share){
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
-            i.putExtra(Intent.EXTRA_TEXT, "Download my new webview app https://play.google.com/store/apps/details?id=com.sam.webapp");
-            startActivity(Intent.createChooser(i,"Share Via"));
+            i.putExtra(Intent.EXTRA_TEXT, "Mâhir Lisân Akademi uygulamasını indir: https://play.google.com/store/apps/details?id=com.mahirlisan.akademi");
+            startActivity(Intent.createChooser(i,"Paylaş"));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -130,27 +125,21 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        //paste your Social Media ID's here.
-        String fb = "Paste Your Facebook ID Here";
-        String twt = "Paste Your Twitter ID Here";
-        String ig = "Paste Your Instagram ID Here";
-        String lin = "Paste Your LinkedIn ID Here";
-        String amzn = "Paste Your Amazon Affiliate Link Here";
-        String flpkrt = "Paste Your Flipkart Affiliate Link Here";
         int id = item.getItemId();
-                if (id == R.id.nav_facebook) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://facebook.com/"+fb)));
-                } else if (id == R.id.nav_twitter) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/"+twt)));
-                } else if (id == R.id.nav_linkedin) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://linkedin.com/"+lin)));
-                } else if (id == R.id.nav_insta) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/"+ig)));
-                } else if (id == R.id.nav_amazon) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(amzn)));
-                } else if (id == R.id.nav_flipkart) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(flpkrt)));
-                }
+        if (id == R.id.nav_home) {
+            webView.loadUrl("https://mahirlisan.com/dashboard.html?platform=playstore");
+        } else if (id == R.id.nav_refresh) {
+            if (isOnline()) {
+                webView.loadUrl(webView.getUrl());
+            } else {
+                Toast.makeText(this, "İnternet bağlantısı yok.", Toast.LENGTH_SHORT).show();
+            }
+        } else if (id == R.id.nav_share) {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(Intent.EXTRA_TEXT, "Mâhir Lisân Akademi uygulamasını indir: https://play.google.com/store/apps/details?id=com.mahirlisan.akademi");
+            startActivity(Intent.createChooser(i, "Paylaş"));
+        }
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -173,7 +162,7 @@ public class MainActivity extends AppCompatActivity
                     next();
                     finish();
                 }else {
-                    Toast.makeText(MainActivity.this, "Press again to exit.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Çıkmak için tekrar basın.", Toast.LENGTH_SHORT).show();
                 }
                 Timer timer=new Timer();
                 timer.schedule(new TimerTask() {
@@ -201,11 +190,9 @@ public class MainActivity extends AppCompatActivity
             webSettings.setJavaScriptEnabled(true);
             webView.getSettings().setLoadsImagesAutomatically(true);
             webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-            webView.setWebViewClient(new WebViewClient());
             webView.setWebViewClient(new Browser_Home());
             webView.setWebChromeClient(new ChromeClient());
             webSettings.setAllowFileAccess(true);
-            webSettings.setAppCacheEnabled(true);
 
             //handle downloading
             webView.setDownloadListener(new DownloadListener() {
@@ -219,7 +206,7 @@ public class MainActivity extends AppCompatActivity
                     String cookies = CookieManager.getInstance().getCookie(url);
                     request.addRequestHeader("cookie", cookies);
                     request.addRequestHeader("User-Agent", userAgent);
-                    request.setDescription("Downloading File...");
+                    request.setDescription("Dosya indiriliyor...");
                     request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimeType));
                     request.allowScanningByMediaScanner();
                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
@@ -228,7 +215,7 @@ public class MainActivity extends AppCompatActivity
                                     url, contentDisposition, mimeType));
                     DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                     dm.enqueue(request);
-                    Toast.makeText(getApplicationContext(), "Downloading File", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Dosya İndiriliyor", Toast.LENGTH_LONG).show();
                 }});
 
             adView=findViewById(R.id.adView);
@@ -236,7 +223,7 @@ public class MainActivity extends AppCompatActivity
             adView.loadAd(adRequest);
 
             interstitialAd=new InterstitialAd(this);
-            interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); //Enter your adunit ID here
+            interstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712"); 
             interstitialAd.loadAd(new AdRequest.Builder().build());
             interstitialAd.setAdListener(new AdListener() {
                 @Override
@@ -250,8 +237,8 @@ public class MainActivity extends AppCompatActivity
             retrybtn.setVisibility(View.INVISIBLE);
         }
         else {
-            Toast.makeText(this, "Can't Connect to Internet.", Toast.LENGTH_SHORT).show();
-            textView.setText("                      No Connection! \n Please check your internet connection.");
+            Toast.makeText(this, "İnternet Bağlantısı Yok.", Toast.LENGTH_SHORT).show();
+            textView.setText("Bağlantı Yok! \n Lütfen internet bağlantınızı kontrol edin.");
             retrybtn.setEnabled(true);
         }
     }
@@ -264,7 +251,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    //fullscreen videos
     private static class Browser_Home extends WebViewClient {
         Browser_Home(){}
         @Override
@@ -279,7 +265,7 @@ public class MainActivity extends AppCompatActivity
 
     private class ChromeClient extends WebChromeClient {
         private View customview;
-        private WebChromeClient.CustomViewCallback customviewcallback;
+        private CustomViewCallback customviewcallback;
         private int originalorientation;
         private int originalsystemvisibility;
 
