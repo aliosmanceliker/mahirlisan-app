@@ -5,37 +5,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_facebook"
-            android:icon="@drawable/twitter"
-            android:title="@string/fb" />
+            android:id="@+id/nav_home"
+            android:title="Ana Sayfa" />
         <item
-            android:id="@+id/nav_twitter"
-            android:icon="@drawable/twitter"
-            android:title="@string/twt" />
+            android:id="@+id/nav_refresh"
+            android:title="Yenile" />
         <item
-            android:id="@+id/nav_insta"
-            android:icon="@drawable/twitter"
-            android:title="@string/ig" />
-        <item
-            android:id="@+id/nav_linkedin"
-            android:icon="@drawable/linked"
-            android:title="@string/linkdin" />
-        <item
-            android:id="@+id/nav_google"
-            android:icon="@drawable/google"
-            android:title="@string/gplus" />
+            android:id="@+id/nav_share"
+            android:title="Paylaş" />
     </group>
-
-    <item android:title="@string/recom">
-        <menu>
-            <item
-                android:id="@+id/nav_amazon"
-                android:icon="@drawable/amazon"
-                android:title="@string/amzn" />
-            <item
-                android:id="@+id/nav_flipkart"
-                android:icon="@drawable/flipkart"
-                android:title="@string/flpkrt" />
-        </menu>
-    </item>
 </menu>
